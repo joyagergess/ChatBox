@@ -14,10 +14,23 @@ $apis = [
     '/users_chat/update'  => ['controller' => 'UsersChatsController', 'method' => 'updateUsersChat', 'type' => 'PUT'],
     '/users_chat/delete'  => ['controller' => 'UsersChatsController', 'method' => 'deleteUsersChat', 'type' => 'DELETE'],
 
-    '/chat/create' => ['controller' => 'ChatsController', 'method' => 'createChat', 'type' => 'POST'],
-    '/chats'       => ['controller' => 'ChatsController', 'method' => 'getChats', 'type' => 'GET'],
-    '/chat'        => ['controller' => 'ChatsController', 'method' => 'getChatByID', 'type' => 'GET'],
-    '/chat/update' => ['controller' => 'ChatsController', 'method' => 'updateChat', 'type' => 'PUT'],
-    '/chat/delete' => ['controller' => 'ChatsController', 'method' => 'deleteChat', 'type' => 'DELETE'],
+    '/chat/create'      => ['controller' => 'ChatsController', 'method' => 'createChat', 'type' => 'POST'],
+    '/chats'            => ['controller' => 'ChatsController', 'method' => 'getChats', 'type' => 'GET'],
+    '/chat'             => ['controller' => 'ChatsController', 'method' => 'getChatByID', 'type' => 'GET'],
+    '/chat/update'      => ['controller' => 'ChatsController', 'method' => 'updateChat', 'type' => 'PUT'],
+    '/chat/delete'      => ['controller' => 'ChatsController', 'method' => 'deleteChat', 'type' => 'DELETE'],
+    
+    '/messages'           => ['controller' => 'MessagesController', 'method' => 'getMessages', 'type' => 'GET'],
+    '/message'            => ['controller' => 'MessagesController', 'method' => 'getMessageByID', 'type' => 'GET'],
+    '/message/create'     => ['controller' => 'MessagesController', 'method' => 'createMessage', 'type' => 'POST'],
+    '/message/update'     => ['controller' => 'MessagesController', 'method' => 'updateMessage', 'type' => 'PUT'],
+    '/message/delete'     => ['controller' => 'MessagesController', 'method' => 'deleteMessage', 'type' => 'DELETE'],
+
+    '/contacts'           => ['controller' => 'ContactsController', 'method' => 'getAllContacts', 'type' => 'GET'],
+    '/contact'            => ['controller' => 'ContactsController', 'method' => 'getContactByID', 'type' => 'GET'],
+    '/contact/create'     => ['controller' => 'ContactsController', 'method' => 'createContact', 'type' => 'POST'],
+    '/contact/update'     => ['controller' => 'ContactsController', 'method' => 'updateContact', 'type' => 'PUT'],
+    '/contact/delete'     => ['controller' => 'ContactsController', 'method' => 'deleteContact', 'type' => 'DELETE'],
+    '/contacts/byuser'    => ['controller' => 'ContactsController', 'method' => 'getContactsByUser', 'type' => 'GET'],
 
 ];
