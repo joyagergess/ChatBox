@@ -5,7 +5,7 @@ class Messages extends Model {
     protected static $table = "messages";
 
     private ?int $id;
-    private int $conversation_id;
+    private int $chats_id;
     private int $sender_id;
     private string $content;
     private ?string $created_at;
@@ -14,7 +14,7 @@ class Messages extends Model {
 
     public function __construct(array $data = []) {
         $this->id = $data['id'] ?? null;
-        $this->conversation_id = $data['conversation_id'] ?? 0;
+        $this->chats_id = $data['chats_id'] ?? 0;
         $this->sender_id = $data['sender_id'] ?? 0;
         $this->content = $data['content'] ?? '';
         $this->created_at = $data['created_at'] ?? null;
