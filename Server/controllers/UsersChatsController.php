@@ -79,5 +79,9 @@ class UsersChatsController {
             ? ResponseService::response(200, "UsersChats deleted successfully")
             : ResponseService::response(500, "Failed to delete UsersChats");
     }
+    getChatsByUser(){
+        
+    }
+    
 }
 ?>

@@ -112,21 +112,21 @@ public static function findById($primaryKeyValue, string $primaryKey, mysqli $co
     }
 
     public static function findOneBy(string $column, $value, mysqli $connection) {
-    $sql = "SELECT * FROM " . static::$table . " WHERE $column = ? ";
-    $stmt = $connection->prepare($sql);
+        $sql = "SELECT * FROM " . static::$table . " WHERE $column = ?";
+        $stmt = $connection->prepare($sql);
 
-    if (!$stmt) {
-        throw new Exception("Prepare failed: " . $connection->error);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $connection->error);
+        }
+
+        $temp = new static([]);
+        $value_type = $temp->get_values_type($value);
+
+        $stmt->bind_param($value_type, $value);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc();
     }
-
-    $temp = new static([]);
-    $value_type = $temp->get_values_type($value);
-
-    $stmt->bind_param($value_type, $value);
-    $stmt->execute();
-
-    return $stmt->get_result()->fetch_assoc();
-}
 
  
 }
