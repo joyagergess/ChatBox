@@ -2,9 +2,9 @@
 include("../connection/connection.php");
 
 $sql = "CREATE TABLE IF NOT EXISTS messages (
-    id INT(255) AUTO_INCREMENT PRIMARY KEY,
-    chats_id INT(255) NOT NULL,
-    sender_id INT(255) NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    chats_id INT NOT NULL,
+    sender_id INT NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     delivered_at TIMESTAMP NULL DEFAULT NULL,
