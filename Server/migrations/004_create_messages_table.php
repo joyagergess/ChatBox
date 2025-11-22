@@ -14,4 +14,4 @@ $sql = "CREATE TABLE IF NOT EXISTS messages (
 )";
 
 $connection->prepare($sql)->execute();
-echo "Table messages created.
+echo "Table messages created.";
