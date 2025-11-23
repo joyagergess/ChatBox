@@ -21,12 +21,15 @@ $apis = [
     '/chat/update'      => ['controller' => 'ChatsController', 'method' => 'updateChat', 'type' => 'PUT'],
     '/chat/delete'      => ['controller' => 'ChatsController', 'method' => 'deleteChat', 'type' => 'DELETE'],
     '/chat/check' => ['controller' => 'ChatsController', 'method' => 'checkChat', 'type' => 'GET'],
-
-    '/messages'           => ['controller' => 'MessagesController', 'method' => 'getMessages', 'type' => 'GET'],
+   
+    '/messages'           => ['controller' => 'MessagesController', 'method' => 'getAllMessages', 'type' => 'GET'],
     '/message'            => ['controller' => 'MessagesController', 'method' => 'getMessageByID', 'type' => 'GET'],
     '/message/create'     => ['controller' => 'MessagesController', 'method' => 'createMessage', 'type' => 'POST'],
     '/message/update'     => ['controller' => 'MessagesController', 'method' => 'updateMessage', 'type' => 'PUT'],
     '/message/delete'     => ['controller' => 'MessagesController', 'method' => 'deleteMessage', 'type' => 'DELETE'],
+    '/messages/by-chat'   => ['controller' => 'MessagesController', 'method' => 'getMessagesByChat', 'type' => 'GET'],
+    '/messages/mark-read' => ['controller' => 'MessagesController', 'method' => 'markChatRead', 'type' => 'POST'],
+    '/messages/mark-delivered' => ['controller' => 'MessagesController', 'method' => 'markChatDelivered', 'type' => 'POST'],
 
     '/contacts'           => ['controller' => 'ContactsController', 'method' => 'getAllContacts', 'type' => 'GET'],
     '/contact'            => ['controller' => 'ContactsController', 'method' => 'getContactByID', 'type' => 'GET'],

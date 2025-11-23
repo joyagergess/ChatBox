@@ -86,5 +86,36 @@ class MessagesController {
             ? ResponseService::response(200, $messages)
             : ResponseService::response(404, "No messages found for this chat");
     }
+
+
+    public function markChatDelivered() {
+        global $connection;
+        $data = $this->getRequestData();
+        if (empty($data['chats_id']) || empty($data['user_id'])) {
+            echo ResponseService::response(400, "chats_id and user_id required");
+            return;
+        }
+
+        $success = MessagesService::markChatDelivered(intval($data['chats_id']), intval($data['user_id']), $connection);
+        echo $success ? ResponseService::response(200, "Messages marked delivered") 
+                      : ResponseService::response(500, "Failed to mark delivered");
+    }
+
+    public function markChatRead() {
+        global $connection;
+        $data = $this->getRequestData();
+        if (empty($data['chats_id']) || empty($data['user_id'])) {
+            echo ResponseService::response(400, "chats_id and user_id required");
+            return;
+        }
+
+        $success = MessagesService::markChatRead(intval($data['chats_id']), intval($data['user_id']), $connection);
+        echo $success ? ResponseService::response(200, "Messages marked read") 
+                      : ResponseService::response(500, "Failed to mark read");
+    }
+
+
+
+
 }
 ?>

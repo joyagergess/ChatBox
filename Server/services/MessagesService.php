@@ -26,8 +26,37 @@ class MessagesService {
         return Messages::findAll($connection);
     }
 
-    public static function findMessagesByChat(int $chats_id, mysqli $connection) {
-        return Messages::findOneBy('chats_id', $chats_id, $connection);
+     public static function findMessagesByChat(int $chats_id, mysqli $connection) {
+        $sql = "SELECT * FROM messages WHERE chats_id = ? ORDER BY created_at ASC";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("i", $chats_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public static function markChatDelivered(int $chats_id, int $user_id, mysqli $connection) {
+        $sql = "UPDATE messages 
+                SET delivered_at = NOW() 
+                WHERE chats_id = ? 
+                  AND sender_id != ? 
+                  AND delivered_at IS NULL";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("ii", $chats_id, $user_id);
+        return $stmt->execute();
+    }
+
+    public static function markChatRead(int $chats_id, int $user_id, mysqli $connection) {
+        $sql = "UPDATE messages 
+                SET read_at = NOW() 
+                WHERE chats_id = ? 
+                  AND sender_id != ? 
+                  AND read_at IS NULL";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("ii", $chats_id, $user_id);
+        return $stmt->execute();
+    }
+
 }
+
 ?>

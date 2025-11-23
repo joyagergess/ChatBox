@@ -1,4 +1,4 @@
-const currentUserId = localStorage.getItem("userId");
+let currentUserId = localStorage.getItem("userId");
 
 if (!currentUserId) console.warn("No user logged in");
 

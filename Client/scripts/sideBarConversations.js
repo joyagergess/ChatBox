@@ -59,16 +59,25 @@ function renderConversations(conversations, currentUserId) {
 }
 function openConversation(chatId, users) {
 
+    // Save the current chat ID
     localStorage.setItem("currentChatId", chatId);
 
+    // Update chat header
     const chatName = document.getElementById("chatName");
     chatName.textContent = users.length > 0
         ? `${users.join(", ")}`
-        : " Unknown";
+        : "Unknown";
 
+    // Clear the chat messages container while loading
     const chatMessages = document.getElementById("chatMessages");
     chatMessages.innerHTML = `<p>Loading messages for chat ${chatId}...</p>`;
+
+    // Load all messages for this chat
+    if (typeof window.loadChatMessages === "function") {
+        window.loadChatMessages(chatId);  // this function is from messages.js
+    }
 }
+
 
 
 document.addEventListener("DOMContentLoaded", fetchUserConversations);
