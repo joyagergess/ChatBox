@@ -8,6 +8,7 @@ class SummaryService {
                 FROM messages 
                 WHERE chats_id = ? AND sender_id != ? AND read_at IS NULL
                 ORDER BY created_at ASC";
+                
         $stmt = $connection->prepare($sql);
         $stmt->bind_param("ii", $chatId, $userId);
         $stmt->execute();

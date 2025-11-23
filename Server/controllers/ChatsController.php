@@ -38,7 +38,7 @@ class ChatsController {
         $data = $this->getRequestData();
         $data['chat_type'] = $data['chat_type'] ?? 'single';
     
-        $chatId = ChatsService::createChat($data, $connection); // returns the new chat ID
+        $chatId = ChatsService::createChat($data, $connection); 
     
         if ($chatId) {
             echo ResponseService::response(200, [

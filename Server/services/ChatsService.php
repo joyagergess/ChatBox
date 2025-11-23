@@ -45,6 +45,7 @@ class ChatsService {
     return $stmt->get_result()->fetch_assoc();
 }
 
+
 public static function findChatsByUser(int $userId, mysqli $connection) {
     $sql = "SELECT c.* 
             FROM chats c
@@ -52,9 +53,17 @@ public static function findChatsByUser(int $userId, mysqli $connection) {
             WHERE uc.user_id = ?";
 
     $stmt = $connection->prepare($sql);
+
     $stmt->bind_param("i", $userId);
     $stmt->execute();
-    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $result = $stmt->get_result();
+
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+
+    return $rows;
 }
 
 }

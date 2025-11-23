@@ -29,16 +29,11 @@ class AuthService {
 
     public static function login(string $email, string $password, mysqli $connection) {
         $user = UserService::findUserByEmail($email, $connection);
-
-        if (!$user) {
-            echo ResponseService::response(404, "Email not found");
-            exit;
-        }
-
-        if (!password_verify($password, $user['password'])) {
-            echo ResponseService::response(401, "Incorrect password");
-            exit;
-        }
+        
+       if (!$user || !password_verify($password, $user['password'])) {
+        echo ResponseService::response(401, "Wrong email or password");
+        exit;
+    }
         unset($user['password']);
 
         echo ResponseService::response(200, $user);

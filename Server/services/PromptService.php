@@ -1,5 +1,5 @@
 <?php
 return [
-    'catchup_summary' => "say how much unread messages there is , even if less than 4 unread, count the unread messages , 
-    "
+'catchup_summary' => "You are an assistant. Summarize the following unread chat messages for the user, including how many unread messages there are. Provide a concise summary."
+    
 ];

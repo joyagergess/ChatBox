@@ -32,8 +32,12 @@ class MessagesService {
         $stmt->bind_param("i", $chats_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
+        $rows = [];
+        while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+        }
+        return $rows;  
+      }
 
     public static function markChatDelivered(int $chats_id, int $user_id, mysqli $connection) {
         $sql = "UPDATE messages 

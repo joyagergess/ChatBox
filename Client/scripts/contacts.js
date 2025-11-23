@@ -7,7 +7,7 @@ document.getElementById("newContactBtn").addEventListener("click", async () => {
 
     const currentUserId = localStorage.getItem("userId");
     if (!currentUserId) {
-        alert("You must be logged in!");
+        showContactMessage("You must be logged in!");
         return;
     }
 
@@ -63,6 +63,7 @@ function createAddButton(userId, existingContactIds, currentUserId) {
     const btn = document.createElement("button");
     btn.textContent = "Add";
     btn.classList.add("add-btn");
+
     if (existingContactIds.includes(userId)) btn.style.display = "none";
 
     btn.addEventListener("click", async () => {
@@ -71,27 +72,29 @@ function createAddButton(userId, existingContactIds, currentUserId) {
                 user_id: currentUserId,
                 contact_id: userId
             });
+
             if (res.data.status === 200) {
-                alert("Contact added!");
+                showContactMessage("Contact added");
                 btn.style.display = "none";
                 btn.nextSibling.style.display = "inline-block";
                 existingContactIds.push(userId);
             } else {
-                alert(res.data.data || "Failed to add contact");
+                showContactMessage(res.data.data);
             }
+
         } catch (err) {
             console.error(err);
-            alert("Failed to add contact");
+            showContactMessage("Failed to add contact");
         }
     });
 
     return btn;
 }
-
 function createRemoveButton(userId, existingContactIds, currentUserId) {
     const btn = document.createElement("button");
     btn.textContent = "Remove";
     btn.classList.add("remove-btn");
+
     if (!existingContactIds.includes(userId)) btn.style.display = "none";
 
     btn.addEventListener("click", async () => {
@@ -99,18 +102,22 @@ function createRemoveButton(userId, existingContactIds, currentUserId) {
             const res = await axios.delete(`${base_url}/contact/delete`, {
                 data: { user_id: currentUserId, contact_id: userId }
             });
+
             if (res.data.status === 200) {
-                alert("Contact removed!");
+                showContactMessage(res.data.data); 
                 btn.style.display = "none";
                 btn.previousSibling.style.display = "inline-block";
+
                 const index = existingContactIds.indexOf(userId);
                 if (index > -1) existingContactIds.splice(index, 1);
+
             } else {
-                alert(res.data.data || "Failed to remove contact");
+                showContactMessage(res.data.data || "Failed to remove contact");
             }
+
         } catch (err) {
             console.error(err);
-            alert("Failed to remove contact");
+            showContactMessage("Failed to remove contact");
         }
     });
 
@@ -122,3 +129,15 @@ document.getElementById("cancelContactBtn").addEventListener("click", () => {
     popup.classList.add("hidden");
 });
 
+
+function showContactMessage(text) {
+    const msg = document.getElementById("contactMessage");
+    msg.textContent = text;
+    msg.style.display = "block";
+     msg.style.color = "green";
+
+    setTimeout(() => {
+        msg.style.display = "none";
+
+    }, 2000);
+}

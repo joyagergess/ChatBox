@@ -11,27 +11,30 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
         const response = await axios.post(`${base_url}/auth/login`, { email, password });
 
-        if (response.data.status === 200) {
-            message.style.color = "green";
-            message.textContent = "Login successful!";
+      if (response.data.status === 200) {
+    message.style.color = "green";
+    message.textContent = "Login successful!";
 
-            localStorage.setItem("userId", response.data.data.id);
-            localStorage.setItem("userName", response.data.data.name);
-            
-            const chats = await axios.get(`${base_url}/chats/user?user_id=${response.data.data.id}`);
-               if (chats.data.status === 200) {
-               const chatList = chats.data.data;
- 
-             const chatIds = chatList.map(chat => chat.id);
+    localStorage.setItem("userId", response.data.data.id);
+    localStorage.setItem("userName", response.data.data.name);
 
-             let firstChatId = chatIds.length > 0 ? chatIds[0] : null;
-             
-             localStorage.setItem("currentChatId", firstChatId);
+    const chats = await axios.get(`${base_url}/chats/user?user_id=${response.data.data.id}`);
 
-            window.location.href = "index.html";
-        } else {
-            message.style.color = "red";
-            message.textContent = response.data.data || "Login failed";
-        }
+    if (chats.data.status === 200) {
+        const chatList = chats.data.data;
+
+        const chatIds = chatList.map(chat => chat.id);
+        const firstChatId = chatIds.length > 0 ? chatIds[0] : null;
+
+        localStorage.setItem("currentChatId", firstChatId);
     }
+
+    window.location.href = "index.html";
+
+} else {
+    message.style.color = "red";
+    message.textContent = response.data.message || "Wrong email or password";
+}
+
+    
 });

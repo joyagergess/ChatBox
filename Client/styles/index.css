@@ -435,3 +435,27 @@ body, html {
     margin-top: 5px;
     color: #333;
 }
+.message-box {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: none;
+}
+
+.message-box.success {
+    background: #d4f8d4;
+    color: #2b7a2b;
+    border: 1px solid #88d488;
+}
+
+.message-box.error {
+    background: #ffd6d6;
+    color: #b30000;
+    border: 1px solid #ff8a8a;
+}
+.hidden {
+    display: none;
+}
+
+

@@ -4,3 +4,7 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
     window.location.href = "login.html";
 });
+
+if (!localStorage.getItem("userId")) {
+    window.location.href = "login.html";
+}

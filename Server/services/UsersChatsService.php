@@ -33,6 +33,7 @@ class UsersChatsService {
     public static function findByUserId(int $user_id, mysqli $connection) {
         return UsersChats::findOneBy("user_id", $user_id, $connection);
     }
+    
     public static function getChatsByUser(int $user_id, mysqli $connection) {
     $sql = "
         SELECT uc.chats_id, GROUP_CONCAT(u.name SEPARATOR ', ') AS user_names
@@ -53,8 +54,13 @@ class UsersChatsService {
     $stmt->bind_param("ii", $user_id, $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_all(MYSQLI_ASSOC);
-}
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+
+    return $rows;
+   }
 
 }
     

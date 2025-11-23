@@ -21,7 +21,7 @@
         </div>
 
         <div class="chat-summary" id="chatSummary">
-            <div id="summaryContent">No summary yet.</div>
+            <div id="summaryContent"></div>
         </div>
 
         <div class="conversations" id="conversations"></div>
@@ -46,8 +46,11 @@
 </div>
 
 <div id="popup_contact" class="popup hidden">
+
     <div class="popup-content">
         <h3>Add a new contact</h3>
+         <div id="contactMessage" class="hidden message-box"></div>
+
         <div id="userList" class="user-list"></div>
         <button id="cancelContactBtn" class="cancel-btn">Cancel</button>
     </div>
@@ -57,9 +60,11 @@
     <div class="popup-content">
         <h3>Start a new conversation</h3>
         <div id="conversationUserList" class="user-list"></div>
+        <div id="conversationMessage" class="message hidden"></div>
         <button id="cancelConversationBtn" class="cancel-btn">Cancel</button>
     </div>
 </div>
+
 
 
 <script src="scripts/config.js"></script>
