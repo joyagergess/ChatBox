@@ -1,4 +1,3 @@
-
 const chatSummaryDiv = document.getElementById("summaryContent");
 
 (async () => {
@@ -16,8 +15,13 @@ const chatSummaryDiv = document.getElementById("summaryContent");
       user_id: userId
     });
 
-    console.log(res.data.data.ai_summary);
-    chatSummaryDiv.innerText = res.data.data.ai_summary;
+    const aiSummary = res.data.data.ai_summary;
+    const unreadCount = res.data.data.unread_count;
+    chatSummaryDiv.innerText = aiSummary && aiSummary.trim() !== ""
+      ? aiSummary
+      : `You have ${unreadCount} unread message(s).`;
+
+    console.log(chatSummaryDiv.innerText);
 
   } catch (error) {
     console.error("Error fetching AI summary:", error);
