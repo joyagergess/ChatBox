@@ -13,6 +13,7 @@ $apis = [
     '/users_chat/create'  => ['controller' => 'UsersChatsController', 'method' => 'createUsersChat', 'type' => 'POST'],
     '/users_chat/update'  => ['controller' => 'UsersChatsController', 'method' => 'updateUsersChat', 'type' => 'PUT'],
     '/users_chat/delete'  => ['controller' => 'UsersChatsController', 'method' => 'deleteUsersChat', 'type' => 'DELETE'],
+    '/users_chats/byuser' => ['controller' => 'UsersChatsController', 'method' => 'getChatsByUser', 'type' => 'GET'],
 
     '/chat/create'      => ['controller' => 'ChatsController', 'method' => 'createChat', 'type' => 'POST'],
     '/chats'            => ['controller' => 'ChatsController', 'method' => 'getChats', 'type' => 'GET'],

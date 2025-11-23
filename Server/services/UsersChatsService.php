@@ -33,46 +33,31 @@ class UsersChatsService {
     public static function findByUserId(int $user_id, mysqli $connection) {
         return UsersChats::findOneBy("user_id", $user_id, $connection);
     }
-
-
-public static function getChatsByUser(int $user_id, mysqli $connection) {
+    public static function getChatsByUser(int $user_id, mysqli $connection) {
     $sql = "
-        SELECT uc.chats_id, c.chat_type, u.id AS user_id, u.name, u.email
+        SELECT uc.chats_id, GROUP_CONCAT(u.name SEPARATOR ', ') AS user_names
         FROM users_chats uc
-        INNER JOIN chats c ON uc.chats_id = c.id
-        INNER JOIN users u ON u.id != ? AND u.id IN (
-            SELECT user_id FROM users_chats WHERE chats_id = uc.chats_id
+        JOIN users u ON uc.user_id = u.id
+        WHERE uc.chats_id IN (
+            SELECT chats_id FROM users_chats WHERE user_id = ?
         )
-        WHERE uc.user_id = ?
-        GROUP BY uc.chats_id, u.id
+        AND u.id != ?
+        GROUP BY uc.chats_id
     ";
 
     $stmt = $connection->prepare($sql);
-    if (!$stmt) throw new Exception("Prepare failed: " . $connection->error);
+    if (!$stmt) {
+        throw new Exception("Prepare failed: " . $connection->error);
+    }
 
     $stmt->bind_param("ii", $user_id, $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $chats = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $chatId = $row['chats_id'];
-        if (!isset($chats[$chatId])) {
-            $chats[$chatId] = [
-                "chat_id" => $chatId,
-                "chat_type" => $row['chat_type'],
-                "participants" => []
-            ];
-        }
-        $chats[$chatId]["participants"][] = [
-            "user_id" => $row['user_id'],
-            "name" => $row['name'],
-            "email" => $row['email']
-        ];
-    }
-
-    return array_values($chats);
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 }
-?>
+    
+        
+    ?>
+    

@@ -17,6 +17,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
             message.textContent = "Login successful!";
 
             localStorage.setItem("userId", response.data.data.id);
+            localStorage.setItem("userName", response.data.data.name);
 
             window.location.href = "index.html";
         } else {

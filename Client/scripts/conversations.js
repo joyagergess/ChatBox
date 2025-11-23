@@ -70,39 +70,40 @@ function renderConversationUserList(contacts, container, popup) {
         startBtn.textContent = "Start Chat";
         startBtn.className = "add-btn";
 
-        startBtn.addEventListener("click", async () => {
-    try {
-        const existingRes = await axios.get(`${base_url}/chat/check?user1=${currentUserId}&user2=${contact.contact_id}`);
-        
-        if (existingRes.data.status === 200 && existingRes.data.data.chat_id) {
-            alert("A conversation already exists!");
+    startBtn.addEventListener("click", async () => {
+        try {
+            const existingRes = await axios.get(`${base_url}/chat/check?user1=${currentUserId}&user2=${contact.contact_id}`);
+            if (existingRes.data.status === 200 && existingRes.data.data.chat_id) {
+                alert("A conversation already exists!");
+                popup.classList.add("hidden");
+                return; 
+            }
+    
+            const res = await axios.post(`${base_url}/chat/create`, { chat_type: "single" });
+            if (res.data.status !== 200) {
+                alert(res.data.data || "Failed to start conversation");
+                return;
+            }
+    
+            const chatId = res.data.data.chat_id; 
+    
+            await Promise.all([
+                axios.post(`${base_url}/users_chat/create`, { chats_id: chatId, user_id: parseInt(currentUserId) }),
+                axios.post(`${base_url}/users_chat/create`, { chats_id: chatId, user_id: parseInt(contact.contact_id) })
+            ]);
+    
+            alert("Conversation started!");
             popup.classList.add("hidden");
-            return; 
+    
+            await fetchUserConversations(); 
+    
+        } catch (err) {
+            console.error(err);
+            alert("Failed to start conversation");
         }
-
-        const res = await axios.post(`${base_url}/chat/create`, { chat_type: "single" });
-
-        if (res.data.status !== 200) {
-            alert(res.data.data || "Failed to start conversation");
-            return;
-        }
-
-        const chatId = res.data.data.chat_id; 
-
-        await Promise.all([
-            axios.post(`${base_url}/users_chat/create`, { chats_id: chatId, user_id: parseInt(currentUserId) }),
-            axios.post(`${base_url}/users_chat/create`, { chats_id: chatId, user_id: parseInt(contact.contact_id) })
-        ]);
-
-        alert("Conversation started!");
-        popup.classList.add("hidden");
-
-    } catch (err) {
-        console.error(err);
-        alert("Failed to start conversation");
-    }
- });
-
+    });
+    
+    
         const btnContainer = document.createElement("div");
         btnContainer.style.display = "flex";
         btnContainer.style.gap = "8px";
