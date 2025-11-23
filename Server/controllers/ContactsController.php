@@ -40,27 +40,51 @@ class ContactsController {
             : ResponseService::response(500, "Failed to update contact");
     }
 
-   public function deleteContact() {
-    global $connection;
-    $data = $this->getRequestData();
-
-    if (empty($data["user_id"]) || empty($data["contact_id"])) {
-        echo ResponseService::response(400, "user_id and contact_id are required");
-        return;
+    public function deleteContact() {
+        global $connection;
+        $data = $this->getRequestData();
+    
+        if (empty($data["user_id"]) || empty($data["contact_id"])) {
+            echo ResponseService::response(400, "user_id and contact_id are required");
+            return;
+        }
+    
+        $contact = ContactsService::findContactByUserAndContact($data["user_id"], $data["contact_id"], $connection);
+        if (!$contact) {
+            echo ResponseService::response(404, "Contact not found");
+            return;
+        }
+    
+        try {
+            $sql = "SELECT uc1.chats_id 
+                    FROM users_chats uc1
+                    JOIN users_chats uc2 ON uc1.chats_id = uc2.chats_id
+                    JOIN chats c ON uc1.chats_id = c.id
+                    WHERE uc1.user_id = ? AND uc2.user_id = ? AND c.chat_type = 'single'
+                    LIMIT 1";
+            $stmt = $connection->prepare($sql);
+            $stmt->bind_param("ii", $data["user_id"], $data["contact_id"]);
+            $stmt->execute();
+            $chat = $stmt->get_result()->fetch_assoc();
+    
+            if ($chat) {
+                $deleteChatSql = "DELETE FROM chats WHERE id = ?";
+                $stmtDel = $connection->prepare($deleteChatSql);
+                $stmtDel->bind_param("i", $chat['chats_id']);
+                $stmtDel->execute();
+            }
+    
+            $deleted = ContactsService::deleteContact(intval($contact['id']), $connection);
+    
+            echo $deleted
+                ? ResponseService::response(200, "Contact and associated conversation removed successfully")
+                : ResponseService::response(500, "Failed to remove contact");
+            
+        } catch (Exception $e) {
+            echo ResponseService::response(500, "Error deleting contact: " . $e->getMessage());
+        }
     }
-    $contact = ContactsService::findContactByUserAndContact($data["user_id"], $data["contact_id"], $connection);
-
-    if (!$contact) {
-        echo ResponseService::response(404, "Contact not found");
-        return;
-    }
-    $deleted = ContactsService::deleteContact(intval($contact['id']), $connection);
-
-    echo $deleted
-        ? ResponseService::response(200, "Contact removed successfully")
-        : ResponseService::response(500, "Failed to remove contact");
-  }
-
+    
 
     public function getContactByID() {
         global $connection;

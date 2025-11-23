@@ -84,6 +84,25 @@ class ChatsController {
             : ResponseService::response(500, "Failed to delete chat");
     }
 
+    public function checkChat() {
+        global $connection;
     
+        $user1 = $_GET['user1'] ?? null;
+        $user2 = $_GET['user2'] ?? null;
+    
+        if (!$user1 || !$user2) {
+            echo ResponseService::response(400, "user1 and user2 are required");
+            return;
+        }
+    
+        $chat = ChatsService::findChatBetweenUsers(intval($user1), intval($user2), $connection);
+    
+        if ($chat) {
+            echo ResponseService::response(200, ['chat_id' => $chat['id']]);
+        } else {
+            echo ResponseService::response(200, ['chat_id' => null]);
+        }
+    }
+
 }
 ?>
