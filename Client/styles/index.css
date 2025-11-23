@@ -43,21 +43,28 @@ body, html {
     border-radius: 20px;
     border: 1px solid #ccc;
 }
+.sidebar-buttons {
+    display: flex;
+    gap: 10px; 
+    margin: 10px 14px;
+}
 
-#newContactBtn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+.sidebar-btn {
+    flex: 1; 
     padding: 8px 14px;
     border-radius: 5px;
-    cursor: pointer;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
     font-size: 14px;
-    margin: 10px 20px;
+    cursor: pointer;
+    text-align: center;
 }
 
-#newContactBtn:hover {
+.sidebar-btn:hover {
     background-color: #45a049;
 }
+
 
 .conversations {
     flex: 1;
@@ -232,3 +239,4 @@ body, html {
 .cancel-btn:hover {
     background-color: #555;
 }
+
