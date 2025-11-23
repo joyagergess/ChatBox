@@ -79,9 +79,24 @@ class UsersChatsController {
             ? ResponseService::response(200, "UsersChats deleted successfully")
             : ResponseService::response(500, "Failed to delete UsersChats");
     }
-    getChatsByUser(){
-        
-    }
+   
     
+
+    public function getChatsByUser() {
+    global $connection;
+
+    if (empty($_GET['user_id'])) {
+        echo ResponseService::response(400, "user_id is required");
+        return;
+    }
+
+    try {
+        $chats = UsersChatsService::getChatsByUser(intval($_GET['user_id']), $connection);
+        echo ResponseService::response(200, $chats);
+    } catch (Exception $e) {
+        echo ResponseService::response(500, "Failed to fetch chats: " . $e->getMessage());
+    }
+}
+
 }
 ?>

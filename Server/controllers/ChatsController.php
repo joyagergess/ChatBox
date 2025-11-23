@@ -36,19 +36,24 @@ class ChatsController {
     public function createChat() {
         global $connection;
         $data = $this->getRequestData();
-
         $data['chat_type'] = $data['chat_type'] ?? 'single';
-
-        $created = ChatsService::createChat($data, $connection);
-
-        echo $created
-            ? ResponseService::response(200, "Chat created successfully")
-            : ResponseService::response(500, "Failed to create chat");
+    
+        $chatId = ChatsService::createChat($data, $connection); // returns the new chat ID
+    
+        if ($chatId) {
+            echo ResponseService::response(200, [
+                'message' => 'Chat created successfully',
+                'chat_id' => $chatId
+            ]);
+        } else {
+            echo ResponseService::response(500, 'Failed to create chat');
+        }
     }
-
-    public function updateChat() {
-        global $connection;
-        $data = $this->getRequestData();
+    
+    
+      public function updateChat() {
+            global $connection;
+            $data = $this->getRequestData();
 
         if (empty($data["id"])) {
             echo ResponseService::response(400, "Chat ID is required");
@@ -78,5 +83,7 @@ class ChatsController {
             ? ResponseService::response(200, "Chat deleted successfully")
             : ResponseService::response(500, "Failed to delete chat");
     }
+
+    
 }
 ?>

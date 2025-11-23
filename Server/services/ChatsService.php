@@ -3,10 +3,16 @@ require_once(__DIR__ . "/../models/Chats.php");
 
 class ChatsService {
 
-    public static function createChat(array $data, mysqli $connection) {
-        $chat = new Chats($data);
-        return $chat->create($data, $connection);
+   public static function createChat(array $data, mysqli $connection) {
+    $chat = new Chats($data);
+    $created = $chat->create($data, $connection);
+
+    if ($created) {
+        return $connection->insert_id; 
     }
+    return false;
+}
+
 
     public static function updateChat(array $data, int $id, mysqli $connection) {
         $chat = new Chats([]);
