@@ -16,7 +16,8 @@ class SummaryService {
         $messages = [];
         while ($row = $result->fetch_assoc()) {
             $messages[] = $row;
-        }        $stmt->close();
+        }
+        $stmt->close();
 
         $unreadCount = count($messages);
 
@@ -24,17 +25,20 @@ class SummaryService {
             "unread_count" => $unreadCount
         ];
 
-        if ($unreadCount > 0) {
-            $text = "";
-            foreach ($messages as $msg) {
-                $time = date("Y-m-d H:i", strtotime($msg['created_at']));
-                $text .= "[$time] User {$msg['sender_id']}: {$msg['content']}\n";
-            }
+        if ($unreadCount === 0) {
+            $response["ai_summary"] = "";
+            return $response;
+        }
 
-            $aiSummary = callAI('catchup_summary', $text);
-            if ($aiSummary) {
-                $response['ai_summary'] = $aiSummary['summary'] ?? null;
-            }
+        $text = "";
+        foreach ($messages as $msg) {
+            $time = date("Y-m-d H:i", strtotime($msg['created_at']));
+            $text .= "[$time] User {$msg['sender_id']}: {$msg['content']}\n";
+        }
+
+        $aiSummary = callAI('catchup_summary', $text);
+        if ($aiSummary) {
+            $response['ai_summary'] = $aiSummary['summary'] ?? null;
         }
 
         return $response;

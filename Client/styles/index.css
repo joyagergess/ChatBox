@@ -424,3 +424,14 @@ body, html {
     color: gray;
     text-align: right;
 }
+.chat-summary {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+}
+
+#summaryContent {
+    margin-top: 5px;
+    color: #333;
+}

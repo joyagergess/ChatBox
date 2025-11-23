@@ -6,47 +6,44 @@
     <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-    <div class="container">
-<div class="sidebar">
-    <div class="sidebar-header">
-        <h2>Chats</h2>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+
+<div class="container">
+    <div class="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Chats</h2>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+
+        <div class="sidebar-buttons">
+            <button id="newContactBtn" class="sidebar-btn">+ Add Contact</button>
+            <button id="newConversationBtn" class="sidebar-btn">+ New Conversation</button>
+        </div>
+
+        <div class="chat-summary" id="chatSummary">
+            <div id="summaryContent">No summary yet.</div>
+        </div>
+
+        <div class="conversations" id="conversations"></div>
+
     </div>
-<div class="sidebar-buttons">
-    <button id="newContactBtn" class="sidebar-btn">+ Add Contact</button>
-    <button id="newConversationBtn" class="sidebar-btn">+ New Conversation</button>
+
+    <div class="chat-area">
+
+        <div class="chat-header">
+            <h3 id="chatName">Select a chat</h3>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type a message">
+            <button id="sendBtn">Send</button>
+        </div>
+
+    </div>
+
 </div>
-
-
-
-    <div class="search">
-        <input type="text" placeholder="Search or start new chat">
-    </div>
-            
-            <div class="conversations" id="conversations">
-                
-            </div>
-
-        </div>
-
-        <div class="chat-area">
-
-            <div class="chat-header">
-                <h3 id="chatName">Select a chat</h3>
-            </div>
-
-            <div class="chat-messages" id="chatMessages">
-            </div>
-
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message" id="messageInput">
-                <button id="sendBtn">Send</button>
-            </div>
-
-        </div>
-
-    </div>
-
 
 <div id="popup_contact" class="popup hidden">
     <div class="popup-content">
@@ -65,14 +62,15 @@
 </div>
 
 
+<script src="scripts/config.js"></script>
+<script src="scripts/axios.min.js"></script>
+<script src="scripts/contacts.js"></script>
+<script src="scripts/conversations.js"></script>
+<script src="scripts/sideBarConversations.js"></script>
+<script src="scripts/messages.js"></script>
+<script src="scripts/summary.js"></script>
+<script src="scripts/index.js"></script>
+
+
 </body>
-
-   <script src="scripts/config.js"></script>
-    <script src="scripts/axios.min.js"></script>
-    <script src="scripts/contacts.js"></script>
-   <script src="scripts/conversations.js"></script>
-   <script src="scripts/sideBarConversations.js"></script>
-   <script src="scripts/messages.js"></script>
-
-
 </html>

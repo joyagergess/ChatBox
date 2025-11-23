@@ -72,9 +72,22 @@
         }
     });
 
-    async function markChatDelivered(chatId) { await axios.post(`${base_url}/messages/mark-delivered`, { chats_id: parseInt(chatId), user_id: currentUserId }); }
-    async function markChatRead(chatId) { await axios.post(`${base_url}/messages/mark-read`, { chats_id: parseInt(chatId), user_id: currentUserId }); }
+    async function markChatDelivered(chatId) { 
+        await axios.post(`${base_url}/messages/mark-delivered`, 
+            { chats_id: parseInt(chatId), user_id: currentUserId
+
+             });
+     }
+
+     
+    async function markChatRead(chatId) { 
+        await axios.post(`${base_url}/messages/mark-read`,
+             { chats_id: parseInt(chatId), user_id: currentUserId 
+
+             }); }
 
     window.loadChatMessages = loadMessages;
     chatMessages.innerHTML = "<p>Select a conversation to see messages.</p>";
 })();
+
+

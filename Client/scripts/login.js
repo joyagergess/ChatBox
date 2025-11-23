@@ -9,7 +9,6 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
         return;
     }
 
-    try {
         const response = await axios.post(`${base_url}/auth/login`, { email, password });
 
         if (response.data.status === 200) {
@@ -18,15 +17,21 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
             localStorage.setItem("userId", response.data.data.id);
             localStorage.setItem("userName", response.data.data.name);
+            
+            const chats = await axios.get(`${base_url}/chats/user?user_id=${response.data.data.id}`);
+               if (chats.data.status === 200) {
+               const chatList = chats.data.data;
+ 
+             const chatIds = chatList.map(chat => chat.id);
+
+             let firstChatId = chatIds.length > 0 ? chatIds[0] : null;
+             
+             localStorage.setItem("currentChatId", firstChatId);
 
             window.location.href = "index.html";
         } else {
             message.style.color = "red";
             message.textContent = response.data.data || "Login failed";
         }
-    } catch (error) {
-        message.style.color = "red";
-        message.textContent = "An error occurred. Please try again.";
-        console.error(error);
     }
 });

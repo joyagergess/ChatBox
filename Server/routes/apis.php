@@ -21,7 +21,8 @@ $apis = [
     '/chat/update'      => ['controller' => 'ChatsController', 'method' => 'updateChat', 'type' => 'PUT'],
     '/chat/delete'      => ['controller' => 'ChatsController', 'method' => 'deleteChat', 'type' => 'DELETE'],
     '/chat/check' => ['controller' => 'ChatsController', 'method' => 'checkChat', 'type' => 'GET'],
-   
+    '/chats/user' => ['controller' => 'ChatsController', 'method' => 'getChatsByUser', 'type' => 'GET'],
+
     '/messages'           => ['controller' => 'MessagesController', 'method' => 'getAllMessages', 'type' => 'GET'],
     '/message'            => ['controller' => 'MessagesController', 'method' => 'getMessageByID', 'type' => 'GET'],
     '/message/create'     => ['controller' => 'MessagesController', 'method' => 'createMessage', 'type' => 'POST'],

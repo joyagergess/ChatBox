@@ -103,6 +103,20 @@ class ChatsController {
             echo ResponseService::response(200, ['chat_id' => null]);
         }
     }
+    
+    public function getChatsByUser() {
+    global $connection;
+
+    if (empty($_GET["user_id"])) {
+        echo ResponseService::response(400, "User ID is missing");
+        return;
+    }
+
+    $userId = intval($_GET["user_id"]);
+    $chats = ChatsService::findChatsByUser($userId, $connection);
+
+    echo ResponseService::response(200, $chats);
+}
 
 }
 ?>
