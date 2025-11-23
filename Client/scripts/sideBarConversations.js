@@ -57,16 +57,17 @@ function renderConversations(conversations, currentUserId) {
 
 
 }
-
 function openConversation(chatId, users) {
+
+    localStorage.setItem("currentChatId", chatId);
+
     const chatName = document.getElementById("chatName");
     chatName.textContent = users.length > 0
-        ? `Chat with: ${users.join(", ")}`
-        : "Chat with: Unknown";
+        ? `${users.join(", ")}`
+        : " Unknown";
 
     const chatMessages = document.getElementById("chatMessages");
     chatMessages.innerHTML = `<p>Loading messages for chat ${chatId}...</p>`;
-
 }
 
 
