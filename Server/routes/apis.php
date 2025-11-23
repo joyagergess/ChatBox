@@ -32,7 +32,10 @@ $apis = [
     '/contact/update'     => ['controller' => 'ContactsController', 'method' => 'updateContact', 'type' => 'PUT'],
     '/contact/delete'     => ['controller' => 'ContactsController', 'method' => 'deleteContact', 'type' => 'DELETE'],
     '/contacts/byuser'    => ['controller' => 'ContactsController', 'method' => 'getContactsByUser', 'type' => 'GET'],
-    
+    '/contact/info' => ['controller' => 'ContactsController', 'method' => 'getContactInfo', 'type' => 'GET'],
+
+
+
     '/auth/signup'        => ['controller' => 'AuthController', 'method' => 'signup', 'type' => 'POST'],
     '/auth/login'         => ['controller' => 'AuthController', 'method' => 'login', 'type' => 'POST'],
 

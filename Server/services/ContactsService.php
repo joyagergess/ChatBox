@@ -41,6 +41,24 @@ class ContactsService {
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
+  
+public static function getContactInfo(int $user_id, int $contact_id, mysqli $connection) {
+    $sql = "
+        SELECT u.id AS contact_id, u.name, u.email
+        FROM contacts c
+        JOIN users u ON c.contact_id = u.id
+        WHERE c.user_id = ? AND c.contact_id = ?
+    ";
+
+    $stmt = $connection->prepare($sql);
+    if (!$stmt) throw new Exception("Prepare failed: " . $connection->error);
+
+    $stmt->bind_param("ii", $user_id, $contact_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
 
 }
 ?>

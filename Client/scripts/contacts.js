@@ -28,7 +28,7 @@ async function fetchUsers() {
 
 async function fetchUserContacts(userId) {
     const response = await axios.get(`${base_url}/contacts/byuser?user_id=${userId}`);
-    return  response.data.data ;
+    return Array.isArray(response.data.data) ? response.data.data : [];
 }
 
 function renderUserList(users, contacts, currentUserId, container) {

@@ -95,5 +95,23 @@ class ContactsController {
             ? ResponseService::response(200, $contacts)
             : ResponseService::response(404, "No contacts found for this user");
     }
+
+    public function getContactInfo() {
+    global $connection;
+    $user_id = $_GET['user_id'] ?? null;
+    $contact_id = $_GET['contact_id'] ?? null;
+
+    if (!$user_id || !$contact_id) {
+        echo ResponseService::response(400, "user_id and contact_id are required");
+        return;
+    }
+
+    $contact = ContactsService::getContactInfo(intval($user_id), intval($contact_id), $connection);
+
+    echo $contact
+        ? ResponseService::response(200, $contact)
+        : ResponseService::response(404, "Contact not found");
+}
+
 }
 ?>
