@@ -43,5 +43,7 @@ $apis = [
 
     '/auth/signup'        => ['controller' => 'AuthController', 'method' => 'signup', 'type' => 'POST'],
     '/auth/login'         => ['controller' => 'AuthController', 'method' => 'login', 'type' => 'POST'],
+    
+    '/Summary'         => ['controller' => 'SummaryController', 'method' => 'getCatchUpSummary', 'type' => 'POST'],
 
 ];
