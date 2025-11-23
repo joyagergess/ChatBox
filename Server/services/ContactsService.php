@@ -26,8 +26,21 @@ class ContactsService {
         return Contacts::findAll($connection);
     }
 
-    public static function findContactsByUser(int $user_id, mysqli $connection) {
-        return Contacts::findOneBy('user_id', $user_id, $connection);
+   public static function findContactsByUser(int $user_id, mysqli $connection) {
+    return Contacts::findById($user_id, 'user_id', $connection);
+   }
+
+
+   public static function findContactByUserAndContact(int $user_id, int $contact_id, mysqli $connection) {
+    $sql = "SELECT * FROM contacts WHERE user_id = ? AND contact_id = ?";
+    $stmt = $connection->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Prepare failed: " . $connection->error);
     }
+    $stmt->bind_param("ii", $user_id, $contact_id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+}
+
 }
 ?>

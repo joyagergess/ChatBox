@@ -40,20 +40,27 @@ class ContactsController {
             : ResponseService::response(500, "Failed to update contact");
     }
 
-    public function deleteContact() {
-        global $connection;
-        $data = $this->getRequestData();
+   public function deleteContact() {
+    global $connection;
+    $data = $this->getRequestData();
 
-        if (empty($data['id'])) {
-            echo ResponseService::response(400, "Contact ID is required");
-            return;
-        }
-
-        $deleted = ContactsService::deleteContact(intval($data['id']), $connection);
-        echo $deleted
-            ? ResponseService::response(200, "Contact deleted successfully")
-            : ResponseService::response(500, "Failed to delete contact");
+    if (empty($data["user_id"]) || empty($data["contact_id"])) {
+        echo ResponseService::response(400, "user_id and contact_id are required");
+        return;
     }
+    $contact = ContactsService::findContactByUserAndContact($data["user_id"], $data["contact_id"], $connection);
+
+    if (!$contact) {
+        echo ResponseService::response(404, "Contact not found");
+        return;
+    }
+    $deleted = ContactsService::deleteContact(intval($contact['id']), $connection);
+
+    echo $deleted
+        ? ResponseService::response(200, "Contact removed successfully")
+        : ResponseService::response(500, "Failed to remove contact");
+  }
+
 
     public function getContactByID() {
         global $connection;
